@@ -6,7 +6,7 @@ export default function Table() {
     return (
         <div className="mt-10">
             <div className="border border-blue-700 rounded-md flex  mb-2 w-5/6 p-1">
-                <div className="flex font-semibold ml-2 mr-10 ">
+                <div className="flex font-semibold ml-2 mr-10 6">
                     <FilterAltIcon color="primary"/> <p>Filter by</p>
                 </div>
                 <div className="">
