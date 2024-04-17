@@ -87,6 +87,6 @@ useEffect(() => {
                     <Pagination count={10} color="primary" />
                 </div>
             </div>
-        </div>
-    );
+    </div>
+  );
 }

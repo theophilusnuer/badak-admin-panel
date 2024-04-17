@@ -4,6 +4,7 @@ import Dashboard from './pages/dashboard-page';
 import Login from './pages/register-page/login';
 import Signup from './pages/register-page/signup';
 import UserRequest from './pages/user-request-page';
+import UserProfile from './pages/user-profile-page';
 
 
 function App() {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
   {path:"/login", element: <Login/>},
   {path:"/signup", element: <Signup/>},
   {path:"/userrequest", element: <UserRequest/>},
+  {path:"/userprofile", element: <UserProfile/>},
 
 ]);
 
