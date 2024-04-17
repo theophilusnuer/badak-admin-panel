@@ -54,8 +54,8 @@ const LoginForm = () => {
       marginTop: "100px",
       padding: '20px',
     }}>
-     <form>
-     <div className='flex flex-center flex-col items-center content-center justify-center'>
+     <form className='flex flex-center flex-col items-center content-center'>
+     <div>
         <div className="flex justify-center font-bold text-blue-700 text-2xl">
           <p>Login</p>
         </div>
