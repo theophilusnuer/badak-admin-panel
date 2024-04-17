@@ -11,9 +11,12 @@ import Button from "@mui/material/Button";
 import { Link } from 'react-router-dom';
 import ErrorMessage from "./errorMessage"
 import { authenticateUser } from './AuthenticationService';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const LoginForm = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
@@ -30,10 +33,13 @@ const LoginForm = () => {
     e.preventDefault();
   };
 
+  const navigate = useNavigate();
+  
   const handleLogin = async () => {
     try {
-      await authenticateUser.login(formData.username, formData.password);
+      const user = await authenticateUser.login(formData.email, formData.password);
       // Redirect user after successful login
+      navigate('/');
     } catch (error) {
       setError('Invalid username or password');
     }
@@ -41,9 +47,6 @@ const LoginForm = () => {
 
   return (
     <Box sx={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      alignItems: 'center',
       borderRadius: '10px',
       boxShadow: "3",
       width: "35%",
@@ -51,19 +54,23 @@ const LoginForm = () => {
       marginTop: "100px",
       padding: '20px',
     }}>
-      <div>
+     <form>
+     <div className='flex flex-center flex-col items-center content-center justify-center'>
         <div className="flex justify-center font-bold text-blue-700 text-2xl">
           <p>Login</p>
         </div>
+        {/* user name */}
         <FormControl style={{ marginBottom: "50px" }} fullWidth sx={{ m: 1, width: "46ch" }}>
-          <InputLabel htmlFor="standard-adornment-amount">Username</InputLabel>
+          <InputLabel htmlFor="standard-adornment-amount">Email</InputLabel>
           <Input
             id="standard-adornment-amount"
-            name="username"
-            value={formData.username}
+            name="email"
+            type='email'
+            value={formData.email}
             onChange={handleInputChange}
           />
         </FormControl>
+        {/* password */}
         <FormControl style={{ marginBottom: "20px" }} fullWidth sx={{ m: 1, width: "46ch" }} variant="standard">
           <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
           <Input
@@ -85,6 +92,7 @@ const LoginForm = () => {
             }
           />
         </FormControl>
+        {/* error message */}
         {error && <ErrorMessage message={error} />}
         <Button
           style={{ marginBottom: "10px" }}
@@ -104,6 +112,7 @@ const LoginForm = () => {
           </Link>
         </div>
       </div>
+     </form>
     </Box>
   );
 };

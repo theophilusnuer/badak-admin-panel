@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -23,9 +24,6 @@ const Signup = () => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
         borderRadius: "10px",
         boxShadow: "3",
         width: "35%",
@@ -67,120 +65,133 @@ const Signup = () => {
           }}
         >
           <Form>
-            <Field name="firstname">
-              {({ field, meta }) => (
-                <FormControl
-                  style={{ marginBottom: "25px" }}
-                  fullWidth
-                  sx={{ m: 1, width: "46ch" }}
-                >
-                  <InputLabel htmlFor="firstname">First Name</InputLabel>
-                  <OutlinedInput id="firstname" label="First Name" {...field} />
-                  <ErrorMessage
-                    name="firstname"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </FormControl>
-              )}
-            </Field>
-            <Field name="lastname">
-              {({ field, meta }) => (
-                <FormControl
-                  style={{ marginBottom: "25px" }}
-                  fullWidth
-                  sx={{ m: 1, width: "46ch" }}
-                >
-                  <InputLabel htmlFor="lastname">Last Name</InputLabel>
-                  <OutlinedInput id="lastname" label="Last Name" {...field} />
-                  <ErrorMessage
-                    name="lastname"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </FormControl>
-              )}
-            </Field>
-            <Field name="email">
-              {({ field, meta }) => (
-                <FormControl
-                  style={{ marginBottom: "25px" }}
-                  fullWidth
-                  sx={{ m: 1, width: "46ch" }}
-                >
-                  <InputLabel htmlFor="email">Email</InputLabel>
-                  <OutlinedInput id="email" label="Email" {...field} />
-                  <ErrorMessage name="email">
-                    {(msg) => <div className="text-red-500">{msg}</div>}
-                  </ErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-            <Field name="password">
-              {({ field, meta }) => (
-                <FormControl
-                  style={{ marginBottom: "20px" }}
-                  fullWidth
-                  sx={{ m: 1, width: "46ch" }}
-                  variant="outlined"
-                >
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <OutlinedInput
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    {...field}
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </FormControl>
-              )}
-            </Field>
-            <Field name="confirmPassword">
-              {({ field, meta }) => (
-                <FormControl
-                  style={{ marginBottom: "20px" }}
-                  fullWidth
-                  sx={{ m: 1, width: "46ch" }}
-                  variant="outlined"
-                >
-                  <InputLabel htmlFor="confirmPassword">
-                    Confirm password
-                  </InputLabel>
-                  <OutlinedInput
-                    id="confirmPassword"
-                    type={showPassword ? "text" : "password"}
-                    {...field}
-                  />
-                  <ErrorMessage
-                    name="confirmPassword"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </FormControl>
-              )}
-            </Field>
-            <Button
-              style={{ marginBottom: "20px" }}
-              sx={{ bgcolor: "#1d4ed8", width: "52ch" }}
-              variant="contained"
-              type="submit"
-            >
-              Register
-            </Button>
+            <div className="flex flex-center flex-col items-center content-center justify-center">
+              {" "}
+              <Field name="firstname">
+                {({ field, meta }) => (
+                  <FormControl
+                    style={{ marginBottom: "25px" }}
+                    fullWidth
+                    sx={{ m: 1, width: "46ch" }}
+                  >
+                    <InputLabel htmlFor="firstname">First Name</InputLabel>
+                    <OutlinedInput
+                      id="firstname"
+                      label="First Name"
+                      {...field}
+                    />
+                    <ErrorMessage
+                      name="firstname"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="lastname">
+                {({ field, meta }) => (
+                  <FormControl
+                    style={{ marginBottom: "25px" }}
+                    fullWidth
+                    sx={{ m: 1, width: "46ch" }}
+                  >
+                    <InputLabel htmlFor="lastname">Last Name</InputLabel>
+                    <OutlinedInput id="lastname" label="Last Name" {...field} />
+                    <ErrorMessage
+                      name="lastname"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="email">
+                {({ field, meta }) => (
+                  <FormControl
+                    style={{ marginBottom: "25px" }}
+                    fullWidth
+                    sx={{ m: 1, width: "46ch" }}
+                  >
+                    <InputLabel htmlFor="email">Email</InputLabel>
+                    <OutlinedInput id="email" label="Email" {...field} />
+                    <ErrorMessage name="email">
+                      {(msg) => <div className="text-red-500">{msg}</div>}
+                    </ErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="password">
+                {({ field, meta }) => (
+                  <FormControl
+                    style={{ marginBottom: "20px" }}
+                    fullWidth
+                    sx={{ m: 1, width: "46ch" }}
+                    variant="outlined"
+                  >
+                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <OutlinedInput
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      {...field}
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </FormControl>
+                )}
+              </Field>
+              <Field name="confirmPassword">
+                {({ field, meta }) => (
+                  <FormControl
+                    style={{ marginBottom: "20px" }}
+                    fullWidth
+                    sx={{ m: 1, width: "46ch" }}
+                    variant="outlined"
+                  >
+                    <InputLabel htmlFor="confirmPassword">
+                      Confirm password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="confirmPassword"
+                      type={showPassword ? "text" : "password"}
+                      {...field}
+                    />
+                    <ErrorMessage
+                      name="confirmPassword"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </FormControl>
+                )}
+              </Field>
+              <Button
+                style={{ marginBottom: "20px" }}
+                sx={{ bgcolor: "#1d4ed8", width: "52ch" }}
+                variant="contained"
+                type="submit"
+              >
+                Register
+              </Button>
+              <div className="flex justify-center">
+                Already have an account?
+                <Link to="/login">
+                  <p className="text-blue-700 ml-2">Login Here</p>
+                </Link>
+              </div>
+            </div>
           </Form>
         </Formik>
       </div>
