@@ -20,6 +20,29 @@ const Signup = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const Register = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/user`, {
+      method: "POST",
+      body: JSON.stringify({
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+        confirmPassword: formData.get("confirmPassword"),
+      }),
+      headers: {
+        'content-type': "application/json"
+      }
+    });
+    console.log(response)
+    //clear input
+    event.target.reset();
+  }
+
 
   return (
     <Box
@@ -64,10 +87,10 @@ const Signup = () => {
             }, 400);
           }}
         >
-          <Form>
+          <form onSubmit={Register}>
             <div className="flex flex-center flex-col items-center content-center justify-center">
               {" "}
-              <Field name="firstname">
+              <Field name="firstName">
                 {({ field, meta }) => (
                   <FormControl
                     style={{ marginBottom: "25px" }}
@@ -76,7 +99,7 @@ const Signup = () => {
                   >
                     <InputLabel htmlFor="firstname">First Name</InputLabel>
                     <OutlinedInput
-                      id="firstname"
+                      id="firstName"
                       label="First Name"
                       {...field}
                     />
@@ -88,7 +111,7 @@ const Signup = () => {
                   </FormControl>
                 )}
               </Field>
-              <Field name="lastname">
+              <Field name="lastName">
                 {({ field, meta }) => (
                   <FormControl
                     style={{ marginBottom: "25px" }}
@@ -96,7 +119,7 @@ const Signup = () => {
                     sx={{ m: 1, width: "46ch" }}
                   >
                     <InputLabel htmlFor="lastname">Last Name</InputLabel>
-                    <OutlinedInput id="lastname" label="Last Name" {...field} />
+                    <OutlinedInput id="lastName" label="Last Name" {...field} />
                     <ErrorMessage
                       name="lastname"
                       component="div"
@@ -192,7 +215,7 @@ const Signup = () => {
                 </Link>
               </div>
             </div>
-          </Form>
+          </form>
         </Formik>
       </div>
     </Box>

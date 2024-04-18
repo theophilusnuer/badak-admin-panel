@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 
 export default function Table() {
     const [requests, setRequests] = useState([]);
+    const [userToken, setUserToken] = useState (null);
 
     const getRequests = async () => {
-        const response = await fetch('http://localhost:4000/api/request', {
+        const response = await fetch('https://badak-admin-portal-backend.onrender.com /api/request', {
             method: 'GET',
             body: JSON.stringify(),
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxLCJpYXQiOjE3MTI5MzYzODR9.E9C3paPTOf9bkN9YpAThQiQEsPIHBHiX_VBed5_sr3U',
+                'Authorization': `Bearer ${userToken}`,
                 'Content-type': 'application/json'
             }
         });
@@ -20,9 +21,15 @@ export default function Table() {
         setRequests(data);
     }
 
-useEffect(() => {
-    getRequests();
-}, []);
+    useEffect(() => {
+        // Fetch user token from local storage or cookies
+        const token = localStorage.getItem('userToken');
+        setUserToken(token);
+        // Fetch requests when component mounts
+        if (token) {
+            getRequests();
+        }
+    }, [userToken]);
 
     return (
         <div className="mt-10">
