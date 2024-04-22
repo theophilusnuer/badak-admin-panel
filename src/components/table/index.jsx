@@ -1,11 +1,25 @@
 import { Pagination } from "@mui/material";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useEffect, useState } from "react";
+import EditIcon from '@mui/icons-material/Edit';
+import { Dialog, DialogTitle } from '@mui/material';
+import VerifyStatus from "../../pages/verify-status";
+
 
 
 export default function Table() {
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const [requests, setRequests] = useState([]);
-    const [userToken, setUserToken] = useState (null);
+    const [userToken, setUserToken] = useState(null);
 
     const getRequests = async () => {
         const response = await fetch('https://badak-admin-portal-backend.onrender.com /api/request', {
@@ -72,28 +86,35 @@ export default function Table() {
                             <th className=" px-4 py-2 text-left">Date</th>
                             <th className=" px-4 py-2 text-left">Montant</th>
                             <th className=" px-4 py-2 text-left">Diplome</th>
-                            <th className=" px-4 py-2 text-center">Statut</th>
+                            <th className=" px-4 py-2 text-left">Statut</th>
                         </tr>
                     </thead>
                     <tbody>
                         {requests.map(request => (
                             <tr key={request
-                            ._id} className="border-b border-gray-100">
+                                ._id} className="border-b border-gray-100">
                                 <td className=" px-4 py-2">{request.name}</td>
                                 <td className=" px-4 py-2">{request.school}</td>
                                 <td className=" px-4 py-2">{request.program}</td>
                                 <td className=" px-4 py-2">{request.certificate}</td>
-                                <td className=" px-4 py-2 text-center">
-                                    <p className=" rounded-lg bg-green-200">{request.status}</p>
+                                <td className=" px-4 py-2 text-left flex">
+                                    <p className="p-1 mr-6 rounded-lg bg-green-200">{request.status}</p>
+                                    <EditIcon onClick={handleOpen} />
                                 </td>
                             </tr>
                         ))}
                     </tbody>
+
+                    <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle>Edit Request</DialogTitle>
+                        <VerifyStatus onClose={handleClose} />
+                    </Dialog>
+
                 </table>
                 <div className="flex justify-center my-4">
                     <Pagination count={10} color="primary" />
                 </div>
             </div>
-    </div>
-  );
+        </div>
+    );
 }

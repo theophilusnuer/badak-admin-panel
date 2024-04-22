@@ -8,12 +8,13 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -25,7 +26,7 @@ const Signup = () => {
 
     const formData = new FormData(event.target);
 
-    const response = await fetch("http://localhost:4000/api/user/", {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/user/`, {
       method: "POST",
       body: JSON.stringify({
         firstName: formData.get("firstName"),
@@ -41,6 +42,7 @@ const Signup = () => {
     console.log(response);
     //clear input
     event.target.reset();
+    navigate("/login");
   };
 
   return (
