@@ -25,7 +25,7 @@ const Signup = () => {
 
     const formData = new FormData(event.target);
 
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/user`, {
+    const response = await fetch("http://localhost:4000/api/user/", {
       method: "POST",
       body: JSON.stringify({
         firstName: formData.get("firstName"),
@@ -35,21 +35,24 @@ const Signup = () => {
         confirmPassword: formData.get("confirmPassword"),
       }),
       headers: {
-        'content-type': "application/json"
-      }
+        "content-type": "application/json",
+      },
     });
-    console.log(response)
+    console.log(response);
     //clear input
     event.target.reset();
-  }
-
+  };
 
   return (
     <Box
       sx={{
         borderRadius: "10px",
         boxShadow: "3",
-        width: "35%",
+        width: {
+          xs: "90%",
+          sm: "70%",
+          md: "50%",
+        },
         margin: "auto",
         marginTop: "100px",
         padding: "20px",
