@@ -11,36 +11,20 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "./errorMessage";
 
-const baseURL = process.env.REACT_APP_URL;
-
-// Define the login function
-const login = async (email, password) => {
-  const response = await fetch(`${baseURL}/api/user/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
-
-  console.log(response);
-
-  if (response.ok) {
-    const user = await response.json();
-    return user;
-  } else {
-    throw new Error("Login failed");
-  }
-};
-
 const LoginForm = () => {
+  const baseURL = process.env.REACT_APP_URL;
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleClickShowPassword = () => {
@@ -51,16 +35,26 @@ const LoginForm = () => {
     e.preventDefault();
   };
 
-  const navigate = useNavigate();
-
   const handleLogin = async () => {
     try {
-      const user = await login(formData.email, formData.password);
-      navigate("/");
+      const response = await fetch(`${baseURL}/api/user/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const user = await response.json();
+        console.log(user);
+      } else {
+        throw new Error("Login failed");
+      }
     } catch (error) {
-      console.log(error);
       setError("Sorry, try again!");
     }
+    navigate("/dashboard");
   };
 
   return (

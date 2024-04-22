@@ -48,11 +48,6 @@ const Signup = () => {
       sx={{
         borderRadius: "10px",
         boxShadow: "3",
-        width: {
-          xs: "90%",
-          sm: "70%",
-          md: "50%",
-        },
         margin: "auto",
         marginTop: "100px",
         padding: "20px",
@@ -213,7 +208,7 @@ const Signup = () => {
               </Button>
               <div className="flex justify-center">
                 Already have an account?
-                <Link to="/login">
+                <Link to="/">
                   <p className="text-blue-700 ml-2">Login Here</p>
                 </Link>
               </div>
