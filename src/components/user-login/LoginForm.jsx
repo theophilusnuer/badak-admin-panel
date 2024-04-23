@@ -26,8 +26,10 @@ const login = async (email, password) => {
   console.log(response);
 
   if (response.ok) {
-    const user = await response.json();
-    return user;
+    const data = await response.json();
+    const token = data.accessToken
+    //save token to session storage
+    sessionStorage.setItem('userToken', token)
   } else {
     throw new Error("Login failed");
   }

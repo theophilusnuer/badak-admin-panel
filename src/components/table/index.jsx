@@ -19,14 +19,16 @@ export default function Table() {
     };
 
     const [requests, setRequests] = useState([]);
-    const [userToken, setUserToken] = useState(null);
 
     const getRequests = async () => {
-        const response = await fetch('https://badak-admin-portal-backend.onrender.com /api/request', {
+        // Retrieve token from session storage
+        const token = sessionStorage.getItem("userToken");
+        console.log('userToken:',token);
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL} /api/request`, {
             method: 'GET',
             body: JSON.stringify(),
             headers: {
-                'Authorization': `Bearer ${userToken}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-type': 'application/json'
             }
         });
@@ -36,14 +38,8 @@ export default function Table() {
     }
 
     useEffect(() => {
-        // Fetch user token from local storage or cookies
-        const token = localStorage.getItem('userToken');
-        setUserToken(token);
-        // Fetch requests when component mounts
-        if (token) {
-            getRequests();
-        }
-    }, [userToken]);
+        getRequests();
+    });
 
     return (
         <div className="mt-10">
@@ -87,6 +83,7 @@ export default function Table() {
                             <th className=" px-4 py-2 text-left">Montant</th>
                             <th className=" px-4 py-2 text-left">Diplome</th>
                             <th className=" px-4 py-2 text-left">Statut</th>
+                            <th className=" px-4 py-2 text-left"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,10 +94,10 @@ export default function Table() {
                                 <td className=" px-4 py-2">{request.school}</td>
                                 <td className=" px-4 py-2">{request.program}</td>
                                 <td className=" px-4 py-2">{request.certificate}</td>
-                                <td className=" px-4 py-2 text-left flex">
-                                    <p className="p-1 mr-6 rounded-lg bg-green-200">{request.status}</p>
-                                    <EditIcon onClick={handleOpen} />
+                                <td className=" px-4 py-2 text-center">
+                                    <p className="rounded-lg bg-green-200">{request.status}</p>
                                 </td>
+                                <td> <EditIcon onClick={handleOpen} /></td>
                             </tr>
                         ))}
                     </tbody>
