@@ -42,7 +42,7 @@ const Signup = () => {
     console.log(response);
     //clear input
     event.target.reset();
-    navigate("/login");
+    navigate("/");
   };
 
   return (

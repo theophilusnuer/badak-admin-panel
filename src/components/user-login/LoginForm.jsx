@@ -12,8 +12,6 @@ import { Link, useNavigate } from "react-router-dom";
 import ErrorMessage from "./errorMessage";
 
 
-
-
 const LoginForm = () => {
   const baseURL = process.env.REACT_APP_URL;
   const navigate = useNavigate();
@@ -51,7 +49,7 @@ const LoginForm = () => {
       if (response.ok) {
         const user = await response.json();
         const tokenGenerated = user.token;
-        sessionStorage.setItem("codeToken", tokenGenerated);
+        sessionStorage.setItem("codeToken", tokenGenerated)
 
         console.log(user);
       } else {
@@ -73,7 +71,7 @@ const LoginForm = () => {
         padding: "20px",
       }}
     >
-      <form className="flex flex-col items-center">
+      <form className="flex flex-col items-center w-full">
         <div className="w-full max-w-md">
           <div className="flex justify-center font-bold text-blue-700 text-2xl mb-8">
             <p>Login</p>
