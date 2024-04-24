@@ -1,5 +1,4 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { Link } from 'react-router-dom';
 import { Dialog, DialogTitle } from '@mui/material';
 import VerifyStatus from "../../pages/verify-status";
 import { useState } from 'react';
@@ -30,6 +29,7 @@ export default function Table() {
               <th className=" px-4 py-2 text-left">Name of School</th>
               <th className=" px-4 py-2 text-left">Certification</th>
               <th className=" px-4 py-2 text-left">Status</th>
+              <th className=" px-4 py-2 text-left"></th>
             </tr>
           </thead>
           <tbody>
@@ -38,12 +38,10 @@ export default function Table() {
               <td className=" px-4 py-2">Computer Science</td>
               <td className=" px-4 py-2">UPSA</td>
               <td className=" px-4 py-2">Degree</td>
-              <td className=" px-4 py-2 text-left flex">
-                <p className="p-1 mr-6 rounded-lg bg-green-200">Not Verified</p>
-                <Link>
-                  <EditIcon onClick={handleOpen} />
-                </Link>
+              <td className=" px-4 py-2 text-center ">
+                <p className="rounded-lg bg-green-200">Not Verified</p>
               </td>
+              <td><EditIcon onClick={handleOpen} /></td>
             </tr>
             <tr className="border-b border-gray-100 items-center">
               <td className=" px-4 py-2">John Doe</td>
