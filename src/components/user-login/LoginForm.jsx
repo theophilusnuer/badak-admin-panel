@@ -47,6 +47,9 @@ const LoginForm = () => {
 
       if (response.ok) {
         const user = await response.json();
+        const tokenGenerated = user.token;
+        sessionStorage.setItem("codeToken", tokenGenerated)
+
         console.log(user);
       } else {
         throw new Error("Login failed");
