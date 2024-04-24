@@ -51,13 +51,15 @@ const LoginForm = () => {
         const tokenGenerated = user.token;
         sessionStorage.setItem("codeToken", tokenGenerated)
 
-        console.log(user);
+        console.log("login data", user);
       } else {
         throw new Error("Login failed");
       }
     } catch (error) {
+      console.log(error)
       setError("Sorry, try again!");
     }
+    console.log('Login successfully!');
     navigate("/dashboard");
   };
 

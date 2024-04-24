@@ -26,7 +26,7 @@ const Signup = () => {
 
     const formData = new FormData(event.target);
 
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/user/`, {
+    const response = await fetch(`${process.env.REACT_APP_URL}/api/user/`, {
       method: "POST",
       body: JSON.stringify({
         firstName: formData.get("firstName"),

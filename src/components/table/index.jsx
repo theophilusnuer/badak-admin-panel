@@ -20,7 +20,7 @@ export default function Table() {
 
   const getRequests = async () => {
     // Retrieve token from session storage
-    const token = sessionStorage.getItem("userToken");
+    const token = sessionStorage.getItem("codeToken");
     console.log("userToken:", token);
     const response = await fetch(`${process.env.REACT_APP_URL}/api/request`, {
       method: "GET",
