@@ -7,13 +7,16 @@ import VerifyStatus from "../../pages/verify-status";
 
 export default function Table() {
   const [open, setOpen] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null); // State to store the selected request ID
 
-  const handleOpen = () => {
+  const handleOpen = (requestId) => {
     setOpen(true);
+    setSelectedRequestId(requestId); // Set the selected request ID when opening the dialog
   };
 
   const handleClose = () => {
     setOpen(false);
+    setSelectedRequestId(null); // Reset the selected request ID when closing the dialog
   };
 
   const [requests, setRequests] = useState([]);
@@ -21,7 +24,7 @@ export default function Table() {
   const getRequests = async () => {
     // Retrieve token from session storage
     const token = sessionStorage.getItem("codeToken");
-    console.log("userToken:", token);
+    
     const response = await fetch(`${process.env.REACT_APP_URL}/api/request`, {
       method: "GET",
       body: JSON.stringify(),
@@ -31,9 +34,33 @@ export default function Table() {
       },
     });
     const data = await response.json();
-    console.log("student data: ", data);
-    setRequests(data);
-  };
+    
+    // Update status color based on response
+    const updatedRequests = data.map((request) => {
+      let status = Array.isArray(request.status) ? request.status[0] : request.status; // Handle array format
+      let statusColor;
+      switch (status) {
+        case 'Verified':
+          statusColor = 'green';
+          break;
+        case 'Denied':
+          statusColor = 'red';
+          break;
+        default:
+          statusColor = 'blue';
+          break;
+      }
+      console.log("Request ID:", request._id, "Status:", status, "Status Color:", statusColor);
+      return {
+        ...request,
+        statusColor: statusColor,
+      };
+    });
+
+    console.log("Updated Requests:", updatedRequests);
+    setRequests(updatedRequests);
+};
+
 
   useEffect(() => {
     getRequests();
@@ -77,11 +104,11 @@ export default function Table() {
         <table className="bg-white shadow-lg w-full rounded-lg">
           <thead>
             <tr className="border-b border-gray-100">
-              <th className="px-4 py-2 text-left">ID</th>
-              <th className="px-4 py-2 text-left">Date</th>
-              <th className="px-4 py-2 text-left">Montant</th>
-              <th className="px-4 py-2 text-left">Diplome</th>
-              <th className="px-4 py-2 text-left">Statut</th>
+              <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">School</th>
+              <th className="px-4 py-2 text-left">Program</th>
+              <th className="px-4 py-2 text-left">Certificate</th>
+              <th className="px-4 py-2 text-center">Status</th>
               <th className="px-4 py-2 text-left"></th>
             </tr>
           </thead>
@@ -94,11 +121,13 @@ export default function Table() {
                   <td className="px-4 py-2">{request.program}</td>
                   <td className="px-4 py-2">{request.certificate}</td>
                   <td className="px-4 py-2 text-center">
-                    <p className="rounded-lg bg-green-200">{request.status}</p>
+                  <p className={`rounded-lg text-white ${request.statusColor === 'green' ? 'bg-green-600' : request.statusColor === 'red' ? 'bg-red-600' : 'bg-blue-600'}`}>
+    {request.status}
+  </p>
                   </td>
                   <td>
-                    <EditIcon onClick={handleOpen} />
-                  </td>
+              <EditIcon onClick={() => handleOpen(request._id)} /> {/* Pass the requestId to handleOpen */}
+            </td>
                 </tr>
               ))}
           </tbody>
@@ -110,7 +139,8 @@ export default function Table() {
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit Request</DialogTitle>
-        <VerifyStatus onClose={handleClose} />
+        {/* Pass the selectedRequestId to the VerifyStatus component */}
+        <VerifyStatus requestId={selectedRequestId} onClose={handleClose} />
       </Dialog>
     </div>
   );
